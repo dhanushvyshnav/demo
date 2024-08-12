@@ -6,6 +6,8 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.AriaRole;
 
+import java.nio.file.Paths;
+
 public class Locator {
 
 	public static void main(String[] args) {
@@ -13,6 +15,8 @@ public class Locator {
 		LaunchOptions headless=  new BrowserType.LaunchOptions().setHeadless(false).setChannel("chrome");
 		Page page= playwright.chromium().launch(headless).newPage();
 			page.navigate("https://www.amazon.in/b?ie=UTF8&node=14030937031");
+			page.screenshot(new Page.ScreenshotOptions()
+					.setPath(Paths.get("screenshots/amazon.png")).setFullPage(true));
 			page.getByPlaceholder("Search Amazon.in").type("Atomic habits");
 			page.getByRole(AriaRole.OPTION).first().click();
 			page.getByAltText("data-image-source-density=\"1\"").click();
